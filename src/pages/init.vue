@@ -1,8 +1,20 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-alert type="info">
+          init
+        </v-alert>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  setup(_, { root: { $firebase, $router } }) {
+  setup(_, { root: { $firebase } }) {
     const exampleRef = $firebase.firestore().collection('example')
     const exampleDataList = [
       { alphabet: 'a', code: 'alpha' },
@@ -33,17 +45,9 @@ export default defineComponent({
       { alphabet: 'z', code: 'zulu' }
     ]
 
-    exampleRef.get().then((exampleQuerySnapshot) => {
-      if (exampleQuerySnapshot.empty) {
-        $router.push('/init')
-      }
-    })
-
     exampleDataList.forEach((exampleData) => {
       exampleRef.add(exampleData)
     })
-
-    $router.push('/')
   }
 })
 </script>
